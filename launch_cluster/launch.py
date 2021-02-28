@@ -132,6 +132,10 @@ def setup_manager(server_params,config, manager_ip_address):
     # Common installs: python 3
     sudo("apt-get -qq -y update")
 
+    sudo("apt-get update")
+    sudo("apt-get -y upgrade")
+    sudo("apt-get -qq -y update")
+
     sudo("apt-get -qq -y install -q python3-pip sqlite", quiet=True)
     sudo("pip3 install --upgrade pip")
     sudo("apt-get -qq -y remove -q python3-pip")
@@ -180,12 +184,9 @@ def make_worker_ami(config, ec2, security_group_list):
     # Wait for server to finish booting (keep trying until you can successfully run a command on the server via ssh)
     retry(run, "# waiting for ssh to be connectable...", max_retries=100)
 
+    sudo("apt-get update")
+    sudo("apt-get -y upgrade")
     sudo("apt-get -qq -y update")
-
-    sudo("apt-get -qq -y install -q python python-dev python-pip")
-    sudo("pip install --upgrade pip")
-    sudo("apt-get -qq -y remove -q python-pip")
-    sudo("hash -r")
 
     sudo("apt-get -qq -y install -q python3-pip sqlite")
     sudo("pip3 install --upgrade pip")
@@ -196,11 +197,9 @@ def make_worker_ami(config, ec2, security_group_list):
     sudo("pip3 install --quiet -r /var/tmp/requirements_jupyterhub.txt")
 
     sudo("pip3 -q install ipython jupyter ipykernel nbgrader")
-    sudo("pip2 -q install ipykernel --upgrade")
 
     # register Python 3 and 2 kernel
     sudo("python3 -m ipykernel install")
-    sudo("python2 -m ipykernel install")
     sudo("chmod 755 /mnt")
     sudo("chown ubuntu /mnt")
 
