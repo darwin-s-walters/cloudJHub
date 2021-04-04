@@ -61,15 +61,6 @@ KEY_FILENAME ="/home/%s/.ssh/%s" % (SERVER_PARAMS["SERVER_USERNAME"], SERVER_PAR
 
 FABRIC_QUIET = True
 
-#jupyter_connection = Connection(
-#    user=FABRIC_USER,
-#    host = ip_address_string, 
-#    connect_kwargs={
-#        "key_filename": KEY_FILENAME
-#    }
-#)
-
-
 #FABRIC_QUIET = False
 # Make Fabric only print output of commands when logging level is greater than warning.
 
@@ -269,8 +260,7 @@ class InstanceSpawner(Spawner):
         """ Checks if jupyterhub/notebook is running on the target machine, returns True if Yes, False if not.
             If an attempts count N is provided the check will be run N times or until the notebook is running, whichever
             comes first. """
-        #with settings(**FABRIC_DEFAULTS, host_string=ip_address_string):
-        print("*******FABRIc KEY FILENAME: " + KEY_FILENAME)
+        print("*******FABRIC KEY FILENAME: " + KEY_FILENAME)
         print("*******USER: " + FABRIC_USER)
 
         connection = Connection(
@@ -305,7 +295,6 @@ class InstanceSpawner(Spawner):
     def wait_until_SSHable(self, ip_address_string, max_retries=1):
         """ Run a meaningless bash command (a comment) inside a retry statement. """
         self.log.debug("function wait_until_SSHable for user %s" % self.user.name)
-        #with settings(**FABRIC_DEFAULTS, host_string=ip_address_string):
         connection = Connection(
             user=FABRIC_USER,
             host = ip_address_string, 
