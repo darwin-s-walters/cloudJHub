@@ -260,8 +260,8 @@ class InstanceSpawner(Spawner):
         """ Checks if jupyterhub/notebook is running on the target machine, returns True if Yes, False if not.
             If an attempts count N is provided the check will be run N times or until the notebook is running, whichever
             comes first. """
-        print("*******FABRIC KEY FILENAME: " + KEY_FILENAME)
-        print("*******USER: " + FABRIC_USER)
+        #print("*******FABRIC KEY FILENAME: " + KEY_FILENAME)
+        #print("*******USER: " + FABRIC_USER)
 
         connection = Connection(
             user=FABRIC_USER,
@@ -274,10 +274,10 @@ class InstanceSpawner(Spawner):
             self.log.debug("function check_notebook_running for user %s, attempt %s..." % (self.user.name, i+1))
 
             output = yield fabric_run(connection,"ps -ef | grep jupyterhub-singleuser")
-            print("Output Value ")
-            print(output)
-            print("OUTPUT TYPE: ")
-            print(type(output))
+            #print("Output Value ")
+            #print(output)
+            #print("OUTPUT TYPE: ")
+            #print(type(output))
             for line in str(output).splitlines(): #
                 #if "jupyterhub-singleuser" and NOTEBOOK_SERVER_PORT in line:
                 if "jupyterhub-singleuser" and str(NOTEBOOK_SERVER_PORT)  in line:
